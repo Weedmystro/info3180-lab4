@@ -1,4 +1,6 @@
 import os
+from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 class Config(object):
     """Base Config Object"""
@@ -16,3 +18,15 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     """Production Config that extends the Base Config Object"""
     DEBUG = False
+    
+def get_uploaded_images():
+    rootdir = os.getcwd()
+    print (rootdir)
+
+    for subdir,dirs, files in os.walk(rootdir + 'app/uploads'):
+        for file in files:
+            print (os.path.join(subdir,file))
+            dirs = subdir + os.path.sep + file
+
+            if dirs.endswith(".jpg", "png"):
+                print([file])
